@@ -48,5 +48,25 @@ class Database(object):
     def update_command(self, command):
         self._update_command(command.id, command.name, command.city)
 
+    def show_bestPlayers(self, n):
+        if n and type(n)=="list":
+            n = n[0]
+        res = dict(zip([com.id for com in self.commands], [0 for i in range(len(self.commands))]))
+        for pl in self.players:
+            if res[pl.command_id] != 0:
+                if res[pl.command_id].id < pl.id:
+                    res[pl.command_id] = pl
+            else:
+                res[pl.command_id] = pl
+        ress = []
+        count = 0
+        for pl in res.values():
+            if pl != 0:
+                ress.append(pl)
+                count +=1
+            if count == n:
+                break
+        return "\n".join(["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in ress])
+
     def __str__(self):
         return "\n".join(["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in self.players])

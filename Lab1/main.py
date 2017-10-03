@@ -3,6 +3,7 @@ from Command import Command
 from Database import Database
 import re
 import os
+import time
 
 def get_list(command, startStr):
     res = []
@@ -62,6 +63,9 @@ def getDataToUpdate(command):
         return [Command(int(res[0]), res[1], res[2])]
     return None
 
+def getCount(command:str):
+    return [int(re.findall(r"(\d+)", command)[0])]
+
 if __name__ == "__main__":
     c1 = Command(1, "com1", "city1")
     c2 = Command(2, "com2", "city2")
@@ -81,22 +85,33 @@ if __name__ == "__main__":
                    r"delete command (\d+, )*\d+": {"funk": db.del_command, "args": getIds}}
     dict_update = {r"update player \d+ \(\w+, \d+\)": {"funk":db.update_player, "args":getDataToUpdate},
                    r"update command \d+ \(\w+, \w+\)": {"funk":db.update_command, "args":getDataToUpdate}}
-    command_dict = {"create": dict_create,
-                    "delete": dict_delete,
-                    "update": dict_update}
+    dict_show = {r"show \d+ best player(s)?": {"funk":db.show_bestPlayers, "args":getCount}}
+    command_dict = {"creat": dict_create,
+                    "delet": dict_delete,
+                    "updat": dict_update,
+                    "show ": dict_show}
+    additionalInfo = ""
     while(True):
         os.system('cls')
         print(db)
+        print("-----------")
+        print(additionalInfo)
+        additionalInfo = ""
         command = input()
         command = command.lower().strip()
         if not command:
-            break
-        category = command_dict[command[:6]]
+            continue
+        if not command_dict.get(command[:5]):
+            additionalInfo = "Wrong command"
+            continue
+        category = command_dict[command[:5]]
         if category:
             for k, v in category.items():
                 if re.match(k, command):
                     for elem in v["args"](command):
-                        v["funk"](elem)
+                        additionalInfo = v["funk"](elem)
                     break
+
 #update player 1 (player1, 1)
 #update command 1 (command1, c1)
+#show 1 best players
