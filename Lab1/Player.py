@@ -3,6 +3,10 @@ class Player(object):
         self.id = id
         self.name = name
         self.command_id = command_id
+
+    def update_name(self, name):
+        self.name = name
+
     def __str__(self):
         return "{0} {1} \t {2}".format(self.id, self.name, self.command_id)
 

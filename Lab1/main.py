@@ -34,13 +34,33 @@ def getIds(command):
     startStrings = ["delete player", "delete command"]
     for ss in startStrings:
         if command.startswith(ss):
-            ids = command[len(ss):]
+            ids = command[len(ss):].strip()
             break
     elems = ids.split(", ")
     for el in elems:
         if el:
             res.append(int(el))
     return res
+
+def getDataToUpdate(command):
+    res = []
+    data = ""
+    startStrings = ["update player", "update command"]
+    isPlayer = None
+    for i in range(len(startStrings)):
+        if command.startswith(startStrings[i]):
+            data = command[len(startStrings[i]):].strip()
+            isPlayer = bool(i)
+            break
+    elems = data.split(" ")
+    for el in elems:
+        if el:
+            res.append(el.replace("(", "").replace(")", "").replace(",", ""))
+    if isPlayer == False:
+        return [Player(int(res[0]), res[1], int(res[2]))]
+    if isPlayer == True:
+        return [Command(int(res[0]), res[1], res[2])]
+    return None
 
 if __name__ == "__main__":
     c1 = Command(1, "com1", "city1")
@@ -59,8 +79,8 @@ if __name__ == "__main__":
                    r"create command (\(\d+, \w+, \w+\), )*\(\d+, \w+, \w+\)": {"funk":db.add_command, "args":getCommands}}
     dict_delete = {r"delete player (\d+, )*\d+": {"funk":db.del_player, "args":getIds},
                    r"delete command (\d+, )*\d+": {"funk": db.del_command, "args": getIds}}
-    dict_update = {r"update player \d+ \(\w+, \d+\)": {"funk", "args"},
-                   r"update command \d+ \(\w+, \d+\)": {"funk", "args"}}
+    dict_update = {r"update player \d+ \(\w+, \d+\)": {"funk":db.update_player, "args":getDataToUpdate},
+                   r"update command \d+ \(\w+, \w+\)": {"funk":db.update_command, "args":getDataToUpdate}}
     command_dict = {"create": dict_create,
                     "delete": dict_delete,
                     "update": dict_update}
@@ -69,6 +89,8 @@ if __name__ == "__main__":
         print(db)
         command = input()
         command = command.lower().strip()
+        if not command:
+            break
         category = command_dict[command[:6]]
         if category:
             for k, v in category.items():
@@ -76,5 +98,5 @@ if __name__ == "__main__":
                     for elem in v["args"](command):
                         v["funk"](elem)
                     break
-    print(db)
-    input()
+#update player 1 (player1, 1)
+#update command 1 (command1, c1)
