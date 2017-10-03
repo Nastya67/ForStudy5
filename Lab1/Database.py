@@ -1,5 +1,7 @@
 from Players import Players
 from Commands import Commands
+import pickle
+
 class Database(object):
     players = Players()
     commands = Commands()
@@ -67,6 +69,18 @@ class Database(object):
             if count == n:
                 break
         return "\n".join(["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in ress])
+
+    def save(self):
+        with open('players.pickle', 'wb') as f:
+            pickle.dump(self.players, f)
+        with open('commands.pickle', 'wb') as f:
+            pickle.dump(self.commands, f)
+
+    def load(self):
+        with open('players.pickle', 'rb') as f:
+            self.players = pickle.load(f)
+        with open('commands.pickle', 'rb') as f:
+            self.commands = pickle.load(f)
 
     def __str__(self):
         return "\n".join(["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in self.players])

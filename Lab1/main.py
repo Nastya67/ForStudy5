@@ -67,18 +67,8 @@ def getCount(command:str):
     return [int(re.findall(r"(\d+)", command)[0])]
 
 if __name__ == "__main__":
-    c1 = Command(1, "com1", "city1")
-    c2 = Command(2, "com2", "city2")
-    p1 = Player(1, "pl1", 1)
-    p2 = Player(2, "pl2", 1)
-    p3 = Player(3, "pl3", 2)
-
     db = Database()
-    db.add_command(c1)
-    db.add_command(c2)
-    db.add_player(p1)
-    db.add_player(p2)
-    db.add_player(p3)
+    db.load()
     dict_create = {r"create player (\(\d+, \w+, \d+\), )*\(\d+, \w+, \d+\)": {"funk":db.add_player, "args":getPlayers},
                    r"create command (\(\d+, \w+, \w+\), )*\(\d+, \w+, \w+\)": {"funk":db.add_command, "args":getCommands}}
     dict_delete = {r"delete player (\d+, )*\d+": {"funk":db.del_player, "args":getIds},
@@ -98,6 +88,8 @@ if __name__ == "__main__":
         print(additionalInfo)
         additionalInfo = ""
         command = input()
+        if command == "exit":
+            break
         command = command.lower().strip()
         if not command:
             continue
@@ -111,7 +103,7 @@ if __name__ == "__main__":
                     for elem in v["args"](command):
                         additionalInfo = v["funk"](elem)
                     break
-
+    db.save()
 #update player 1 (player1, 1)
 #update command 1 (command1, c1)
 #show 1 best players
