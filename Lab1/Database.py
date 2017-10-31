@@ -2,6 +2,7 @@ from Players import Players
 from Commands import Commands
 import pickle
 
+
 class Database(object):
     players = Players()
     commands = Commands()
@@ -33,7 +34,7 @@ class Database(object):
         for i in range(len(self.players)):
             if self.players[i].id == player_id:
                 self.players[i].update_name(player_name)
-                if command_id  in [com.id for com in self.commands]:
+                if command_id in [com.id for com in self.commands]:
                     self.players[i].command_id = command_id
                 break
 
@@ -51,7 +52,7 @@ class Database(object):
         self._update_command(command.id, command.name, command.city)
 
     def show_bestPlayers(self, n):
-        if n and type(n)=="list":
+        if n and type(n) == "list":
             n = n[0]
         res = dict(zip([com.id for com in self.commands], [0 for i in range(len(self.commands))]))
         for pl in self.players:
@@ -65,10 +66,11 @@ class Database(object):
         for pl in res.values():
             if pl != 0:
                 ress.append(pl)
-                count +=1
+                count += 1
             if count == n:
                 break
-        return "\n".join(["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in ress])
+        return "\n".join(
+            ["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in ress])
 
     def save(self):
         with open('players.pickle', 'wb') as f:
@@ -83,4 +85,5 @@ class Database(object):
             self.commands = pickle.load(f)
 
     def __str__(self):
-        return "\n".join(["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in self.players])
+        return "\n".join(
+            ["{0} {1} {2}".format(pl.id, pl.name, self.commands.get_command(pl.command_id)) for pl in self.players])

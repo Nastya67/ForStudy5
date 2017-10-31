@@ -1,0 +1,10 @@
+<p>Game {{game.idGame}}, Time {{game.Time}}</p>
+<form>
+    <p><select >
+        <option selected value="{{game.Date}}">{{game.Date}}</option>
+        {%for var in dateVars%}
+        <option value="{{var}}">{{var}}</option>
+        {%endfor%}
+   </select></p>
+   <p><input type="submit" value="OK"></p>
+</form>

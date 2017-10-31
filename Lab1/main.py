@@ -85,7 +85,8 @@ if __name__ == "__main__":
         os.system('cls')
         print(db)
         print("-----------")
-        print(additionalInfo)
+        if additionalInfo:
+            print(additionalInfo)
         additionalInfo = ""
         command = input()
         if command == "exit":

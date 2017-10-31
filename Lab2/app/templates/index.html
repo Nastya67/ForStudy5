@@ -1,0 +1,43 @@
+{% if show %}
+<table style="width:100%"  border="1">
+    <tr>
+        <th>Id Game</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Score</th>
+        <th>Winner</th>
+        <th>Loser</th>
+        <th>Judge Name</th>
+        <th>Address</th>
+        <th>Comments</th>
+        <th></th>
+    </tr>
+    {%for row in db%}
+    <tr>
+        <td>{{row.idGame}}</td>
+        <td>{{row.Date}}</td>
+        <td>{{row.Time}}</td>
+        <td>{{row.Score}}</td>
+        <td>{{row.Winner}}</td>
+        <td>{{row.Loser}}</td>
+        <td>{{row.JudgeName}}</td>
+        <td>{{row.Address}}</td>
+        <td>{{row.Comments}}</td>
+        <td>
+            <form method="post" style="margin:0">
+                {%csrf_token%}
+                <input type="hidden" name="Update" value="{{row.idGame}}, {{row.Time}}">
+                <input type="submit" content="Update" value="Update">
+            </form>
+            <form method="post" style="margin:0">
+                {%csrf_token%}
+                <input type="hidden" name="Delete" value="{{row.idGame}}, {{row.Time}}">
+                <input type="submit" content="Delete" value="Delete">
+            </form>
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+{% else %}
+    <p>bye</p>
+{% endif %}

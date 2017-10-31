@@ -1,0 +1,28 @@
+select g.idGame, r.Time, r.Score, CONCAT(Command.Name,' (',Command.City, ')') as Winner, 
+					l.Loser, g.time as Date, CONCAT(j.Name,' ',j.Surname) AS JudgeName, 
+                    CONCAT(p.City,', ',Street) AS Address, Comments 
+                    from Game g natural join GameResult gr 
+                    inner join Result r on gr.idResult=r.idResult 
+                    inner join Command on Command.idCommand=r.Winner 
+                    inner join Judge j on g.idJudge=j.idJudge
+                    inner join Place p on p.idPlace=g.idPlace
+                    inner join (
+                    select res.idGame, Command.idCommand, res.Time, CONCAT(Command.Name,' (',Command.City, ')') as Loser 
+                    from Command 
+                    inner join (
+					select g1.idGame, gc1.idCommand, r1.Time from Game g1 natural join GameCommand gc1 
+                    inner join GameResult gr1 on g1.idGame=gr1.idGame 
+                    inner join Result r1 on gr1.idResult=r1.idResult where not exists(
+                    select g2.idGame, r2.Winner as idCommand, r2.Time from Game g2 natural join GameResult gr2 
+                    inner join Result r2 on gr2.idResult=r2.idResult 
+                    where g1.idGame=g2.idGame and gc1.idCommand=r2.Winner and r1.Time=r2.Time)) 
+                    as res on Command.idCommand=res.idCommand)as l on l.idGame=g.idGame 
+                    where l.Time=r.Time;
+                    
+                    
+insert into Game values (2, 'Adult', '2017-10-10', 'To del', 1, 1);
+insert into Result values (4, 1, '15:10', 2);
+insert into GameResult values (4, 2, 4);
+insert into GameCommand values(4, 2, 1), (5, 2, 2);
+
+delete  from GameResult;
