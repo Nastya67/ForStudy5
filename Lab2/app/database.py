@@ -44,7 +44,6 @@ class Database(object):
     def delRow(self, idGame, Time):
         try:
             with self.connection.cursor() as cursor:
-                # Read a single record
                 sql = """delete from GameResult where 
                 idResult in (select idResult from Result where Time=%s) 
                     and idGame=%s;"""
