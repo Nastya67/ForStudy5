@@ -1,0 +1,24 @@
+{"Commands":
+  [
+    {
+      "idCommand": 1,
+      "City": "Kharkov",
+      "Name": "Jentelmeny"
+    },
+    {
+      "idCommand": 2,
+      "City": "Kiev",
+      "Name": "Dinamo"
+    },
+    {
+      "idCommand": 3,
+      "City": "Moskva",
+      "Name": "Metalurg"
+    },
+    {
+      "idCommand": 4,
+      "City": "Rim",
+      "Name": "Chelsi"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{"Address":
+  [
+    {
+      "idPlace": 1,
+      "Country":"Ukraine",
+      "City": "Kharkov",
+      "Street":"Street",
+      "Hall":4,
+      "Field":4
+    },
+    {
+      "idPlace": 2,
+      "Country":"Ukraine",
+      "City": "Kiev",
+      "Street":"Khreshchatic",
+      "Hall":4,
+      "Field":4
+    },
+    {
+      "idPlace": 3,
+      "Country":"Ukraine",
+      "City": "Moskva",
+      "Street":"Kievskaya",
+      "Hall":4,
+      "Field":4
+    },
+    {
+      "idPlace": 4,
+      "Country":"Ukraine",
+      "City": "Rim",
+      "Street":"WC Paula",
+      "Hall":4,
+      "Field":4
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{"Judges":
+  [
+    {
+      "idJudge": 1,
+      "Exp":5,
+      "Name":"Victoriya",
+      "Surname":"Glon",
+      "Age":45,
+      "isMan":0
+    },
+    {
+      "idJudge": 2,
+      "Exp":10,
+      "Name":"Victor",
+      "Surname":"Shpak",
+      "Age":50,
+      "isMan":1
+    },
+    {
+      "idJudge": 3,
+      "Exp":15,
+      "Name":"Gena",
+      "Surname":"Romanenko",
+      "Age":55,
+      "isMan":1
+    },
+    {
+      "idJudge": 4,
+      "Exp":2,
+      "Name":"Vitaliy",
+      "Surname":"Diduh",
+      "Age":35,
+      "isMan":1
+    }
+  ]
+}

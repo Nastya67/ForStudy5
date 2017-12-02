@@ -1,0 +1,47 @@
+<h3>New Game</h3>
+<form method="post">
+    <p>
+    Game id: <input type="number" style="width:40px" name="idGame" value="0">
+    Time: <input type="number" style="width:40px" name="time" value="1">
+    </p>
+    {%csrf_token%}
+    <p>Date:<br><input type="datetime-local" name="date" value="{{game.Date}}"></p>
+    <p>Score:<br><input type="number" style="width:50px" name="score0" value="0"> :
+        <input type="number" style="width:50px" name="score1" value="0"></p>
+    <p>Comment:<Br>
+   <textarea name="comment" cols="40" rows="3" ></textarea></p>
+
+    <p>
+        Winner:
+        <select name="winner">
+            {%for el in vars.Commands%}
+                <option>{{el.command}}</option>
+            {%endfor%}
+        </select>
+    </p>
+    <p>
+        Loser:
+        <select name="loser">
+            {%for el in vars.Commands%}
+                <option>{{el.command}}</option>
+            {%endfor%}
+        </select>
+    </p>
+    <p>
+        Judge:
+        <select name="judge">
+        {%for el in vars.Judges%}
+            <option>{{el.judge}}</option>
+        {%endfor%}
+        </select>
+    </p>
+    <p>
+        Address:
+        <select name="address">
+        {%for el in vars.Address%}
+            <option>{{el.address}}</option>
+        {%endfor%}
+        </select>
+    </p>
+   <p><input type="submit" value="OK"></p>
+</form>

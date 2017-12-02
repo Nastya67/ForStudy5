@@ -1,0 +1,20 @@
+<h3>New Time</h3>
+<form method="post">
+    <p>
+    Game id: <input type="number" style="width:40px" name="idGame" value="0">
+    Time: <input type="number" style="width:40px" name="time" value="1">
+    </p>
+    {%csrf_token%}
+    <p>Score:<br><input type="number" style="width:50px" name="score0" value="0"> :
+        <input type="number" style="width:50px" name="score1" value="0"></p>
+
+        Winner:
+        <select name="winner">
+            {%for el in vars.Commands%}
+                <option>{{el.command}}</option>
+            {%endfor%}
+        </select>
+    </p>
+
+   <p><input type="submit" value="OK"></p>
+</form>

@@ -1,10 +1,49 @@
-<p>Game {{game.idGame}}, Time {{game.Time}}</p>
-<form>
-    <p><select >
-        <option selected value="{{game.Date}}">{{game.Date}}</option>
-        {%for var in dateVars%}
-        <option value="{{var}}">{{var}}</option>
+<h3>Game {{game.idGame}}, Time {{game.Time}}</h3>
+<h5>{{game.Winner}} : {{game.Loser}}</h5>
+<form method="post">
+    {%csrf_token%}
+    <p>Date:<br><input type="datetime-local" name="date" value="{{game.Date}}"></p>
+    <p>Score:<br><input type="number" style="width:50px" name="score0" value="{{game.Score.0}}"> :
+        <input type="number" style="width:50px" name="score1" value="{{game.Score.1}}"></p>
+    <p>Comment:<Br>
+   <textarea name="comment" cols="40" rows="3" >{{game.Comments}}</textarea></p>
+
+    <p>
+        Winner:
+        <select name="winner">
+            {%for el in vars.Commands%}
+                {%if el.command == game.Winner%}
+                    <option selected>{{el.command}}</option>
+                {%else%}
+                    <option>{{el.command}}</option>
+                {%endif%}
+            {%endfor%}
+        </select>
+    </p>
+
+    <p>
+        Judge:
+        <select name="judge">
+        {%for el in vars.Judges%}
+             {%if el.judge == game.Judge%}
+                <option selected>{{el.judge}}</option>
+            {%else%}
+                <option>{{el.judge}}</option>
+            {%endif%}
         {%endfor%}
-   </select></p>
+        </select>
+    </p>
+    <p>
+        Address:
+        <select name="address">
+        {%for el in vars.Address%}
+            {%if el.address == game.Address%}
+                <option selected>{{el.address}}</option>
+            {%else%}
+                <option>{{el.address}}</option>
+            {%endif%}
+        {%endfor%}
+        </select>
+    </p>
    <p><input type="submit" value="OK"></p>
 </form>
